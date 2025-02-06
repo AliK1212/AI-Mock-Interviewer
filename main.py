@@ -30,7 +30,7 @@ if not openai.api_key:
 try:
     logger.info("Testing OpenAI API connection...")
     test_response = openai.ChatCompletion.create(
-        model="gpt-4o-mini",
+        model="gpt-4o-mini-2024-07-18",
         messages=[{"role": "user", "content": "Hello"}],
         max_tokens=5
     )
@@ -117,7 +117,7 @@ async def generate_questions(request: Request, interview_request: InterviewReque
 
         logger.info("Making OpenAI API call")
         response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
+            model="gpt-4o-mini-2024-07-18",
             messages=messages,
             temperature=0.7,
             max_tokens=1000
@@ -170,7 +170,7 @@ technical_score, communication_score, overall_score, strengths, improvements, re
 
         logger.info("Making OpenAI API call for analysis")
         response = openai.ChatCompletion.create(
-            model="gpt-4-0125-preview",
+            model="gpt-4o-mini-2024-07-18",
             messages=messages,
             temperature=0.7,
             max_tokens=1000
