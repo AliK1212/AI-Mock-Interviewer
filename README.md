@@ -1,4 +1,4 @@
-# AI Mock Interviewer API
+# AI Mock Interviewer
 
 An advanced AI-powered mock interviewer that conducts technical interviews based on job descriptions and provides detailed feedback on responses.
 
