@@ -50,17 +50,22 @@ origins = [
     "https://deerk-portfolio.onrender.com",
     "http://localhost:3000",
     "http://localhost:5173",
-    "http://localhost:4173"
+    "http://localhost:4173",
+    "https://*.onrender.com",
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "http://localhost:8082",
+    "http://localhost:8083",
+    "http://localhost:8084",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
-    max_age=3600,
+    expose_headers=["*"]
 )
 
 @app.options("/{path:path}")
