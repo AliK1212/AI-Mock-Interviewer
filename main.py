@@ -45,12 +45,22 @@ except Exception as e:
 app = FastAPI()
 
 # Add CORS middleware
+origins = [
+    "https://frontend-portfolio-aomn.onrender.com",
+    "https://deerk-portfolio.onrender.com",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://localhost:4173"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://frontend-portfolio-aomn.onrender.com"],  # Only allow the frontend website
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,
 )
 
 @app.options("/{path:path}")
@@ -58,9 +68,10 @@ async def options_route(request: Request):
     return JSONResponse(
         content="OK",
         headers={
-            "Access-Control-Allow-Origin": "https://frontend-portfolio-aomn.onrender.com",
-            "Access-Control-Allow-Methods": "POST, GET, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Max-Age": "3600",
         }
     )
 
@@ -71,8 +82,9 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Initialize Redis
 redis_client = redis.Redis(
-    host=os.getenv("REDIS_HOST", "redis"),
-    port=int(os.getenv("REDIS_PORT", 6379)),
+    host=os.getenv("RENDER_REDIS_HOST", "localhost"),
+    port=int(os.getenv("RENDER_REDIS_PORT", 6379)),
+    password=os.getenv("RENDER_REDIS_PASSWORD", ""),
     decode_responses=True
 )
 

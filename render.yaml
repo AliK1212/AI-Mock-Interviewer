@@ -3,20 +3,21 @@ services:
     name: mock-interviewer-service
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python main.py
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHONUNBUFFERED
         value: true
       - key: OPENAI_API_KEY
         sync: false  # Set this in the Render dashboard
       - key: ALLOWED_ORIGINS
-        value: https://frontend-portfolio-aomn.onrender.com/
-      - key: REDIS_HOST
-        value: redis
-      - key: REDIS_PORT
-        value: 6379
+        value: https://frontend-portfolio-aomn.onrender.com,https://deerk-portfolio.onrender.com
       - key: PORT
         value: 10000
+    autoDeploy: true
+    plan: starter
+    healthCheckPath: /
+    domains:
+      - mock-interviewer-service.onrender.com
     dependencies:
       - type: redis
         name: mock-interviewer-redis
